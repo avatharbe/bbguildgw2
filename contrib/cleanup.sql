@@ -23,20 +23,20 @@ DELETE FROM phpbb_bb_classes WHERE game_id = 'gw2';
 DELETE FROM phpbb_bb_races WHERE game_id = 'gw2';
 DELETE FROM phpbb_bb_factions WHERE game_id = 'gw2';
 DELETE FROM phpbb_bb_gameroles WHERE game_id = 'gw2';
-DELETE FROM phpbb_bb_players WHERE player_game_id = 'gw2';
+DELETE FROM phpbb_bb_players WHERE game_id = 'gw2';
 DELETE FROM phpbb_bb_games WHERE game_id = 'gw2';
 
 -- ----------------------------------------------------------------------------
 -- 2. phpBB extension registration
 -- ----------------------------------------------------------------------------
 
-DELETE FROM phpbb_ext WHERE ext_name = 'avathar/bbguild_gw2';
+DELETE FROM phpbb_ext WHERE ext_name = 'avathar/bbguildgw2';
 
 -- ----------------------------------------------------------------------------
 -- 3. phpBB migration tracking
 -- ----------------------------------------------------------------------------
 
-DELETE FROM phpbb_migrations WHERE migration_name LIKE '%avathar\\bbguild_gw2%';
+DELETE FROM phpbb_migrations WHERE migration_name LIKE '%avathar\\\\bbguildgw2%';
 
 -- ============================================================================
 -- Done. Now purge the phpBB cache and re-enable the extension from ACP.
