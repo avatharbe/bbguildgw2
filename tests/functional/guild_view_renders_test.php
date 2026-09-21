@@ -105,11 +105,30 @@ class avathar_bbguildgw2_guild_view_renders_test extends phpbb_functional_test_c
 			'last_update'         => time(),
 		)));
 
+		// Seed a portal tab first -- portal_renderer::render() bails out
+		// before ever looking at bb_portal_modules when a guild has zero
+		// tabs (bbguild#360's page-level tabs; see also #374, which
+		// backfills this for guilds created through the normal ACP flow,
+		// but a fixture inserting rows directly via SQL bypasses that flow
+		// entirely and needs to seed its own tab). Uses sql_query()+
+		// sql_nextid() rather than sql_multi_insert() so the new tab_id can
+		// be read back for the module row below.
+		$db->sql_query('DELETE FROM ' . $prefix . 'bb_portal_tabs WHERE guild_id = ' . self::GUILD_ID);
+		$db->sql_query('INSERT INTO ' . $prefix . 'bb_portal_tabs ' . $db->sql_build_array('INSERT', array(
+			'guild_id'   => self::GUILD_ID,
+			'tab_name'   => 'Overview',
+			'tab_slug'   => 'welcome',
+			'tab_order'  => 0,
+			'tab_status' => 1,
+		)));
+		$tab_id = (int) $db->sql_nextid();
+
 		// Attach the roster portal module — mirrors the row shape bbguild
 		// core's base migration seeds for its own default guild_id=1.
 		$db->sql_query('DELETE FROM ' . $prefix . 'bb_portal_modules WHERE guild_id = ' . self::GUILD_ID);
 		$db->sql_multi_insert($prefix . 'bb_portal_modules', array(array(
 			'guild_id'            => self::GUILD_ID,
+			'module_tab'          => $tab_id,
 			'module_classname'    => '\avathar\bbguild\portal\modules\roster',
 			'module_column'       => 1,
 			'module_order'        => 1,
