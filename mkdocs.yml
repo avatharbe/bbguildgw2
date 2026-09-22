@@ -1,0 +1,45 @@
+site_name: bbGuild - Guild Wars 2
+site_url: https://avatharbe.github.io/bbguildgw2/
+repo_url: https://github.com/avatharbe/bbguildgw2
+repo_name: avatharbe/bbguildgw2
+edit_uri: edit/main/contrib/
+
+docs_dir: contrib
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.action.edit
+
+nav:
+  - Home: index.md
+  - Changelog: CHANGELOG.md
+
+exclude_docs: |
+  cleanup.sql
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.superfences

@@ -1,11 +1,5 @@
 # bbGuild - Guild Wars 2
 
-**Current version:** 2.0.0-rc2 (release candidate)
-
-[![Tests](https://github.com/avatharbe/bbguildgw2/actions/workflows/tests.yml/badge.svg)](https://github.com/avatharbe/bbguildgw2/actions/workflows/tests.yml)
-
-**Documentation:** [avatharbe.github.io/bbguildgw2](https://avatharbe.github.io/bbguildgw2/)
-
 Guild Wars 2 never had a holy trinity, and its guilds reflect that — WvW guilds coordinate zergs, not tank/healer/DPS triage, which is why this plugin uses GW2's own Damage/Support/Control roles instead of forcing the usual split onto a game that doesn't have it. bbguildgw2 covers all 10 professions and 5 races, plus Elite Specializations (issue #331) — 27 specs across all 9 professions, so a Firebrand and a Dragonhunter show up on your roster as what they are, not just "Guardian". Whether you're running raids, WvW, or both, your roster finally reflects how your guild actually plays.
 
 ## Features
