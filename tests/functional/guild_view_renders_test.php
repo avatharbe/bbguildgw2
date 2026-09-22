@@ -111,7 +111,7 @@ class avathar_bbguildgw2_guild_view_renders_test extends phpbb_functional_test_c
 		// backfills this for guilds created through the normal ACP flow,
 		// but a fixture inserting rows directly via SQL bypasses that flow
 		// entirely and needs to seed its own tab). Uses sql_query()+
-		// sql_nextid() rather than sql_multi_insert() so the new tab_id can
+		// sql_last_inserted_id() rather than sql_multi_insert() so the new tab_id can
 		// be read back for the module row below.
 		$db->sql_query('DELETE FROM ' . $prefix . 'bb_portal_tabs WHERE guild_id = ' . self::GUILD_ID);
 		$db->sql_query('INSERT INTO ' . $prefix . 'bb_portal_tabs ' . $db->sql_build_array('INSERT', array(
@@ -121,7 +121,7 @@ class avathar_bbguildgw2_guild_view_renders_test extends phpbb_functional_test_c
 			'tab_order'  => 0,
 			'tab_status' => 1,
 		)));
-		$tab_id = (int) $db->sql_nextid();
+		$tab_id = (int) $db->sql_last_inserted_id();
 
 		// Attach the roster portal module — mirrors the row shape bbguild
 		// core's base migration seeds for its own default guild_id=1.
