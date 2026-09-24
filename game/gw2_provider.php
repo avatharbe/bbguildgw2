@@ -144,10 +144,11 @@ class gw2_provider implements game_provider_interface, specialization_provider_i
 	 * meta play, not every possible build — several specs (e.g. Catalyst,
 	 * Vindicator) can flex into other roles depending on traits/gear.
 	 *
-	 * spec_icon intentionally left empty: no icon assets exist yet for
-	 * these specs. Core handles the empty-icon case already (roster spec
-	 * resolution has dedicated test coverage for it). Tracked separately
-	 * as a follow-up.
+	 * spec_icon names a file in images/spec_icons/ (core resolves it as
+	 * spec_icons/<spec_icon>.png, see roster::resolve_spec()). The assets
+	 * are the official elite-specialization icons from the Guild Wars 2
+	 * API's render service (/v2/specializations), normalised from their
+	 * native 64x64 to the 56x56 used by bbguildwow's spec icons.
 	 *
 	 * @return array<int, list<array{spec_name:string,role_id:int,spec_icon:string,spec_order:int}>>
 	 */
@@ -157,49 +158,49 @@ class gw2_provider implements game_provider_interface, specialization_provider_i
 
 		return array(
 			1 => array( // Warrior
-				array('spec_name' => 'Berserker',    'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Spellbreaker',  'role_id' => $control, 'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Bladesworn',    'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Berserker',    'role_id' => $damage,  'spec_icon' => 'warrior_berserker', 'spec_order' => 1),
+				array('spec_name' => 'Spellbreaker',  'role_id' => $control, 'spec_icon' => 'warrior_spellbreaker', 'spec_order' => 2),
+				array('spec_name' => 'Bladesworn',    'role_id' => $damage,  'spec_icon' => 'warrior_bladesworn', 'spec_order' => 3),
 			),
 			2 => array( // Guardian
-				array('spec_name' => 'Dragonhunter', 'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Firebrand',    'role_id' => $support, 'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Willbender',   'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Dragonhunter', 'role_id' => $damage,  'spec_icon' => 'guardian_dragonhunter', 'spec_order' => 1),
+				array('spec_name' => 'Firebrand',    'role_id' => $support, 'spec_icon' => 'guardian_firebrand', 'spec_order' => 2),
+				array('spec_name' => 'Willbender',   'role_id' => $damage,  'spec_icon' => 'guardian_willbender', 'spec_order' => 3),
 			),
 			3 => array( // Engineer
-				array('spec_name' => 'Scrapper',   'role_id' => $support, 'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Holosmith',  'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Mechanist',  'role_id' => $support, 'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Scrapper',   'role_id' => $support, 'spec_icon' => 'engineer_scrapper', 'spec_order' => 1),
+				array('spec_name' => 'Holosmith',  'role_id' => $damage,  'spec_icon' => 'engineer_holosmith', 'spec_order' => 2),
+				array('spec_name' => 'Mechanist',  'role_id' => $support, 'spec_icon' => 'engineer_mechanist', 'spec_order' => 3),
 			),
 			4 => array( // Ranger
-				array('spec_name' => 'Druid',     'role_id' => $support, 'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Soulbeast', 'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Untamed',   'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Druid',     'role_id' => $support, 'spec_icon' => 'ranger_druid', 'spec_order' => 1),
+				array('spec_name' => 'Soulbeast', 'role_id' => $damage,  'spec_icon' => 'ranger_soulbeast', 'spec_order' => 2),
+				array('spec_name' => 'Untamed',   'role_id' => $damage,  'spec_icon' => 'ranger_untamed', 'spec_order' => 3),
 			),
 			5 => array( // Thief
-				array('spec_name' => 'Daredevil', 'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Deadeye',   'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Specter',   'role_id' => $support, 'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Daredevil', 'role_id' => $damage,  'spec_icon' => 'thief_daredevil', 'spec_order' => 1),
+				array('spec_name' => 'Deadeye',   'role_id' => $damage,  'spec_icon' => 'thief_deadeye', 'spec_order' => 2),
+				array('spec_name' => 'Specter',   'role_id' => $support, 'spec_icon' => 'thief_specter', 'spec_order' => 3),
 			),
 			6 => array( // Elementalist
-				array('spec_name' => 'Tempest',   'role_id' => $support, 'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Weaver',    'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Catalyst',  'role_id' => $support, 'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Tempest',   'role_id' => $support, 'spec_icon' => 'elementalist_tempest', 'spec_order' => 1),
+				array('spec_name' => 'Weaver',    'role_id' => $damage,  'spec_icon' => 'elementalist_weaver', 'spec_order' => 2),
+				array('spec_name' => 'Catalyst',  'role_id' => $support, 'spec_icon' => 'elementalist_catalyst', 'spec_order' => 3),
 			),
 			7 => array( // Mesmer
-				array('spec_name' => 'Chronomancer', 'role_id' => $control, 'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Mirage',       'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Virtuoso',     'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Chronomancer', 'role_id' => $control, 'spec_icon' => 'mesmer_chronomancer', 'spec_order' => 1),
+				array('spec_name' => 'Mirage',       'role_id' => $damage,  'spec_icon' => 'mesmer_mirage', 'spec_order' => 2),
+				array('spec_name' => 'Virtuoso',     'role_id' => $damage,  'spec_icon' => 'mesmer_virtuoso', 'spec_order' => 3),
 			),
 			8 => array( // Necromancer
-				array('spec_name' => 'Reaper',     'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Scourge',    'role_id' => $control, 'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Harbinger',  'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Reaper',     'role_id' => $damage,  'spec_icon' => 'necromancer_reaper', 'spec_order' => 1),
+				array('spec_name' => 'Scourge',    'role_id' => $control, 'spec_icon' => 'necromancer_scourge', 'spec_order' => 2),
+				array('spec_name' => 'Harbinger',  'role_id' => $damage,  'spec_icon' => 'necromancer_harbinger', 'spec_order' => 3),
 			),
 			9 => array( // Revenant
-				array('spec_name' => 'Herald',     'role_id' => $support, 'spec_icon' => '', 'spec_order' => 1),
-				array('spec_name' => 'Renegade',   'role_id' => $control, 'spec_icon' => '', 'spec_order' => 2),
-				array('spec_name' => 'Vindicator', 'role_id' => $damage,  'spec_icon' => '', 'spec_order' => 3),
+				array('spec_name' => 'Herald',     'role_id' => $support, 'spec_icon' => 'revenant_herald', 'spec_order' => 1),
+				array('spec_name' => 'Renegade',   'role_id' => $control, 'spec_icon' => 'revenant_renegade', 'spec_order' => 2),
+				array('spec_name' => 'Vindicator', 'role_id' => $damage,  'spec_icon' => 'revenant_vindicator', 'spec_order' => 3),
 			),
 		);
 	}

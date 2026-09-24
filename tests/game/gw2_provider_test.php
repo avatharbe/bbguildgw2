@@ -75,6 +75,34 @@ class gw2_provider_test extends TestCase
 		$this->assertEmpty($this->provider->get_api_locales());
 	}
 
+	public function test_every_elite_spec_has_an_icon_asset(): void
+	{
+		$missing_value = array();
+		$missing_file  = array();
+
+		foreach (gw2_provider::spec_catalog() as $class_id => $specs)
+		{
+			foreach ($specs as $spec)
+			{
+				if ($spec['spec_icon'] === '')
+				{
+					$missing_value[] = $spec['spec_name'];
+					continue;
+				}
+
+				$file = dirname(__DIR__, 2) . '/images/spec_icons/' . $spec['spec_icon'] . '.png';
+
+				if (!file_exists($file))
+				{
+					$missing_file[] = $spec['spec_name'] . ' => ' . $spec['spec_icon'] . '.png';
+				}
+			}
+		}
+
+		$this->assertSame(array(), $missing_value, 'Specs with an empty spec_icon: ' . implode(', ', $missing_value));
+		$this->assertSame(array(), $missing_file, 'Specs whose icon file is missing: ' . implode(', ', $missing_file));
+	}
+
 	public function test_armor_types(): void
 	{
 		$armor = $this->provider->get_armor_types();
